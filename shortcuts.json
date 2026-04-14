@@ -1,4 +1,19 @@
 {
-    "shortcuts": [],
-    "next_id": 1
+    "shortcuts": [
+        {
+            "id": 1,
+            "keys": "Ctrl+Alt+Y",
+            "type": "Open a Web Page",
+            "action": "https://youtube.com",
+            "description": "Opens YouTube"
+        },
+        {
+            "id": 2,
+            "keys": "Ctrl+Alt+G",
+            "type": "Open a Web Page",
+            "action": "https://github.com",
+            "description": "Opens GitHub"
+        }
+    ],
+    "next_id": 3
 }

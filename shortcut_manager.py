@@ -2,7 +2,7 @@
 shortcut_manager.py
 
 handles loading, saving, adding, editing, and deleting keyboard
-shortcuts form the config file, shortcuts.json
+shortcuts from the config file, shortcuts.json
 
 """
 
@@ -15,9 +15,9 @@ config_file = "shortcuts.json"
 def load_shortcuts():
     if not(os.path.exists(config_file)):
         #create a new config if none exist
-        defualt = {"shortcuts": [], "next_id": 1}
-        save_shortcuts(defualt)
-        return defualt
+        default = {"shortcuts": [], "next_id": 1}
+        save_shortcuts(default)
+        return default
     
     with open(config_file, "r") as file:
         return json.load(file)
@@ -34,7 +34,7 @@ def list_shortcuts():
     shortcuts= data["shortcuts"]
 
     if not(shortcuts):
-        print("No shortcuts found.")
+        print("No shortcuts found.\n")
         return None
     print("\nID | Keys | Type | Action | Description")
     print("-" * 50)
@@ -42,7 +42,26 @@ def list_shortcuts():
     for i in shortcuts:#add format printing for better communication
         print(str(i["id"]) + " | " + i["keys"] + " | " + i["type"] + " | " + i["action"] + " | " + i["description"])
     print()
-#def add_shortcut(keys, action_type, action, discription=""):
+
+# Adds shortcuts to the JSON file 
+def add_shortcut(keys, action_type, action, description=""):
+    data = load_shortcuts()
+    
+    new_shortcut = {
+        "id": data["next_id"],
+        "keys": keys,
+        "type": action_type,
+        "action": action,
+        "description": description
+    }
+    
+    data["shortcuts"].append(new_shortcut)
+    data["next_id"] += 1
+    
+    save_shortcuts(data)
+    print(f"Shortcut '{keys}' added with ID {new_shortcut['id']}")
+
+
 
 #def edit_shortcut(shortcut_id, keys=None, action_type=None, action=None, discription=None):
 
@@ -54,7 +73,9 @@ def main():
 
     #print adding new shortcut 
     
-    #add shortcut for something like github 
+    #add shortcut for something like youtube.com 
+    add_shortcut("Ctrl+Alt+Y", "Open a Web Page", "https://youtube.com", "Opens YouTube")
+    add_shortcut("Ctrl+Alt+G", "Open a Web Page", "https://github.com", "Opens GitHub")
 
     #test adding a duplicate keybind but for a differnt link or action
 
