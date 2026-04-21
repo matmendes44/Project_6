@@ -23,6 +23,26 @@ def load_shortcuts():
         return json.load(file)
 
 #data is dictionary
+"""data = {
+    "shortcuts": [
+        {
+            "id": 1,
+            "keys": "Ctrl+Alt+Y",
+            "type": "Open a Web Page",
+            "action": "https://youtube.com",
+            "description": "Opens YouTube"
+        },
+        {
+            "id": 2,
+            "keys": "Ctrl+Alt+G",
+            "type": "Open a Web Page",
+            "action": "https://github.com",
+            "description": "Opens GitHub"
+        }
+    ],
+    "next_id": 3
+}
+"""
 def save_shortcuts(data):
     #save shortcuts to the json config file
     with open(config_file, "w") as file:
@@ -46,6 +66,14 @@ def list_shortcuts():
 # Adds shortcuts to the JSON file 
 def add_shortcut(keys, action_type, action, description=""):
     data = load_shortcuts()
+    for myDict in data["shortcuts"]:#if the keybind already exist you cant add another keybind with the same binding
+        if myDict["keys"] == keys:
+            print("shortcut "+keys+" already exists")
+            return None
+        if myDict["action"] == action:
+            print("action " +action + " already exist")
+            return None
+    
     
     new_shortcut = {
         "id": data["next_id"],
@@ -63,11 +91,52 @@ def add_shortcut(keys, action_type, action, description=""):
 
 
 
-#def edit_shortcut(shortcut_id, keys=None, action_type=None, action=None, discription=None):
+def edit_shortcut(shortcut_id, keys=None, action_type=None, action=None, description=None):
+    data=load_shortcuts()
 
-#def delete_shortcut(shortcut_id):
+    # each shortcut is stored as a dictionary inside data["shortcuts"] -> we are just inside the shortcuts index
+    # example:
+    # myDict = {
+    #     "id": 1,                          <- unique ID number
+    #     "keys": "Ctrl+Alt+Y",             <- keybind combination
+    #     "type": "Open a Web Page",        <- action type
+    #     "action": "https://youtube.com",  <- what gets executed
+    #     "description": "Opens YouTube"    <- label for the user
+    # }
+
+    for myDict in data["shortcuts"]:
+        if myDict["id"] == shortcut_id:
+            if keys is not None: #is not empty 
+                myDict["keys"] = keys
+            if action_type is not None:
+                myDict["type"] = action_type
+            if action is not None:
+                myDict["action"] = action
+            if description is not None:
+                myDict["discription"] = description
+    save_shortcuts(data)
+    print("")
+
+def delete_shortcut(shortcut_id):
+    data = load_shortcuts()
+
+    #iterating over dictionary of data to search the key, "shortcuts" to iterate over the shortcuts
+    for myDict in data["shortcuts"]:
+        if myDict["id"] == shortcut_id:
+            data["shortcuts"].remove(myDict)
+            save_shortcuts(data)
+            print("Shortcut " + str(shortcut_id) +" deleted.")
+            return True
+    print("No shortcut found with ID " + str(shortcut_id))
+    return False
+
+    
 
 def main():
+    #if needed for readablility add formatted print statements
+    #keyword or value :>5 for each print statements varaibles and strings
+
+    
     print("    Listing current shortcuts    ")
     list_shortcuts()
 
@@ -82,14 +151,17 @@ def main():
     print("    Listing after add    ")
     list_shortcuts()
 
-    #print edit shortcut 1 
+    print( "edit shortcut 1" )
+    edit_shortcut(1, keys="ctrl+alt+z")
     #edit_shortcut
 
     #print remove shortcut id 2 
     #remove_shortcut(2)
+    print( "removed shortcut 2" )
+    delete_shortcut(2)
 
     print("    Final shortcut list    ")
     list_shortcuts()
-
+    
 if __name__ == "__main__":
     main()
