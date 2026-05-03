@@ -11,20 +11,21 @@ import os
 
 config_file = "shortcuts.json"
 
-
+#loads from file, or creates a fresh config if file does not exist
 def load_shortcuts():
     if not(os.path.exists(config_file)):
-        #create a new config if none exist
+        
         default = {"shortcuts": [], "next_id": 1}
         save_shortcuts(default)
-        return default
+        return default                  # returns the new default dictionary
     
     with open(config_file, "r") as file:
-        return json.load(file)
+        return json.load(file)          #returns the loaded dictionary from the file
 
 #data is dictionary
-"""data = {
-    "shortcuts": [
+
+"""data = {           #<-- main dictionary
+    "shortcuts": [    #<--- this is a list of dictionaries
         {
             "id": 1,
             "keys": "Ctrl+Alt+Y",
@@ -40,7 +41,7 @@ def load_shortcuts():
             "description": "Opens GitHub"
         }
     ],
-    "next_id": 3
+    "next_id": 3    #<--- returns an int (the next id)
 }
 """
 def save_shortcuts(data):
@@ -84,7 +85,7 @@ def add_shortcut(keys, action_type, action, description=""):
     }
     
     data["shortcuts"].append(new_shortcut)
-    data["next_id"] += 1
+    data["next_id"] += 1 #increment so the next shortcut gets the next id
     
     save_shortcuts(data)
     print(f"Shortcut '{keys}' added with ID {new_shortcut['id']}")
@@ -113,12 +114,13 @@ def edit_shortcut(shortcut_id, keys=None, action_type=None, action=None, descrip
             if action is not None:
                 myDict["action"] = action
             if description is not None:
-                myDict["discription"] = description
+                myDict["description"] = description
     save_shortcuts(data)
     print("")
 
+ # returns True if deleted, False if ID not found
 def delete_shortcut(shortcut_id):
-    data = load_shortcuts()
+    data = load_shortcuts() #if this is called the json file and config is already made, so load_shortcuts returns the loaded dictionary from the file 
 
     #iterating over dictionary of data to search the key, "shortcuts" to iterate over the shortcuts
     for myDict in data["shortcuts"]:
@@ -153,10 +155,9 @@ def main():
 
     print( "edit shortcut 1" )
     edit_shortcut(1, keys="ctrl+alt+z")
-    #edit_shortcut
+ 
 
-    #print remove shortcut id 2 
-    #remove_shortcut(2)
+
     print( "removed shortcut 2" )
     delete_shortcut(2)
 
