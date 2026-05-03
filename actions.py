@@ -6,7 +6,7 @@ import webbrowser #opens URLS in the users defualt browser
 #
 def execute_action (action_type, action_val):
     if action_type == "url":
-        webbrowser.open(action_type)
+        webbrowser.open(action_val)
     elif action_type == "app":
         subprocess.Popen([action_val])
     elif action_type == "command":
@@ -17,6 +17,8 @@ def execute_action (action_type, action_val):
 
 def main():
     execute_action("url", "https://www.youtube.com")
+    execute_action("app", "firefox")
+    execute_action("command", "echo hello")
 
 
 if __name__ == "__main__":
