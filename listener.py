@@ -48,12 +48,12 @@ def on_release(key):
 
 
 def main():
-    with open ("/dev/input/event2", "rb") as fd: # open the keyboard device file in binary read mode to caputre the inputs
-        listen = keyboard.Listener(on_press=on_press, on_release=on_release)
-        listen.start()
+    
+    listen = keyboard.Listener(on_press=on_press, on_release=on_release)
+    listen.start()
 
-        while listen.is_alive():
-            pass
+    while listen.is_alive():
+        pass
 
 if __name__ == "__main__":
     main()
