@@ -5,7 +5,7 @@ import webbrowser #opens URLS in the users defualt browser
 
 
 def execute_action (action_type, action_val):
-    if action_type == "url":
+    if action_type == "url" or action_type == "Open a Web Page":
         webbrowser.open(action_val)
     elif action_type == "app":
         subprocess.Popen([action_val])
