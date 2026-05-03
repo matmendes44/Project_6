@@ -9,7 +9,7 @@ def on_press(key):
     print(held_keys)
 
 def on_release(key):
-    held_keys.remove(key)
+    held_keys.discard(key)#cant use remove becuase it can cauase an error i believe
 
 
 def main():
