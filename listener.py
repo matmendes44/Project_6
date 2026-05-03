@@ -31,7 +31,12 @@ def parse_shortcut(keys_str):
 #execute the action
 def on_press(key):
     held_keys.add(key)
+    print("held:", held_keys, flush=True)
     for shortcut in data["shortcuts"]:
+        parsed = parse_shortcut(shortcut["keys"])
+        print("parsed:", parsed, flush=True)  # see what parse_shortcut returns
+        print("match:", held_keys == parsed, flush=True)
+
         if held_keys == parse_shortcut(shortcut["keys"]):
             execute_action(shortcut["type"], shortcut["action"])
 
