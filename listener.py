@@ -22,7 +22,7 @@ def parse_shortcut(keys_str):
         
         else:#might need more of these cases if we add more key binds
             parsed_result.add(keyboard.KeyCode.from_char(part))##use KeyCode so its not only for stuff like ctrl shift tab, keycode can grab a b c and not just ctrl...
-        return parsed_result
+    return parsed_result
 
 #on press of a key add it to the set of held keys 
 #if the keys held == parsed_shortcuts so if you hold 
