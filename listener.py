@@ -2,6 +2,10 @@ from pynput import keyboard
 from shortcut_manager import load_shortcuts
 from actions import execute_action
 
+#this shit does not work at all 
+#i think the issue is with pynput import keyboard it just is not working on my vm for some reason gonna have to rewrite this file most likely
+
+
 held_keys = set()
 data=load_shortcuts()
 
