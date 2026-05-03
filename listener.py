@@ -6,7 +6,7 @@ held_keys = set()
 
 def on_press(key):
     held_keys.add(key)
-    print(held_keys)
+    print("keys pressed: "+ held_keys)
 
 def on_release(key):
     held_keys.discard(key)#cant use remove becuase it can cauase an error i believe
