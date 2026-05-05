@@ -2,24 +2,31 @@
     "shortcuts": [
         {
             "id": 1,
-            "keys": "ctrl+alt+z",
+            "keys": "ctrl+alt+y",
             "type": "Open a Web Page",
             "action": "https://youtube.com",
             "description": "Opens YouTube"
         },
         {
-            "id": 3,
-            "keys": "Ctrl+Alt+Y",
-            "type": "Open a Web Page",
-            "action": "https://youtube.com",
-            "description": "Opens YouTube"
-        },
-        {
-            "id": 5,
-            "keys": "Ctrl+Alt+G",
+            "id": 2,
+            "keys": "ctrl+alt+g",
             "type": "Open a Web Page",
             "action": "https://github.com",
             "description": "Opens GitHub"
+        },
+        {
+            "id": 3,
+            "keys": "ctrl+alt+t",
+            "type": "Launch an Application",
+            "action": "Terminal",
+            "description": "Opens Terminal"
+        },
+        {
+            "id": 4,
+            "keys": "y+u",
+            "type": "Launch an Application",
+            "action": "notion",
+            "description": ""
         }
     ],
     "next_id": 6

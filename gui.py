@@ -9,7 +9,7 @@ class ShortcutApplication:
         self.root.geometry("600x500")
        # self.root.eval('tk::PlaceWindow . center')
 
-        # --- Action Input Section for Users ---
+        #  Action Input Section for Users 
         tk.Label(root, text="Key Combination Input:").grid(row=0, column=0, padx=10, pady=10, sticky="w")
         self.keyboard_input = tk.Entry(root, width=30)
         self.keyboard_input.grid(row=0, column=1, padx=10, pady=10)
@@ -23,15 +23,15 @@ class ShortcutApplication:
         self.action_entry = tk.Entry(root, width=30)
         self.action_entry.grid(row=2, column=1, padx=10, pady=10)
 
-       # --- Save Button ---
+       # Save Button
         tk.Button(root, text="Save Shortcut", command=self.save_shortcut).grid(row=3, column=1, sticky="e", padx=10, pady=5)
 
-        # --- Shortcut List ---
+        #  Shortcut List 
         tk.Label(root, text="Registered Shortcuts:").grid(row=4, column=0, padx=10, sticky="w")
         self.shortcut_list = tk.Listbox(root, width=70, height=10)
         self.shortcut_list.grid(row=5, column=0, columnspan=2, padx=10, pady=5)
 
-        # --- Delete Button ---
+        #  Delete Button 
         tk.Button(root, text="Delete Selected", command=self.delete_shortcut).grid(row=6, column=1, sticky="e", padx=10, pady=5)
 
         # Load existing shortcuts on startup
@@ -53,7 +53,7 @@ class ShortcutApplication:
         sm.add_shortcut(keys, action_type, action)
         self.refresh_list()
 
-        # Clear the input fields
+        # Clearing the input fields
         self.keyboard_input.delete(0, tk.END)
         self.action_entry.delete(0, tk.END)
 
