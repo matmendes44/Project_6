@@ -39,24 +39,25 @@ def on_press(key):
     data = load_shortcuts()
     for shortcut in data["shortcuts"]:
         try:
-            if matches(parse_shortcut(shortcut["keys"]), held_keys):
-                execute_action(shortcut["type"], shortcut["action"])
-            
+            # if the keys dont match, skip this shortcut entirely and move to the next one
+            if not matches(parse_shortcut(shortcut["keys"]), held_keys):
+                continue
+
+            sindex = shortcut["id"]  # define here so both if/else can use it
+
             ##added for hold timer
             hold_seconds = shortcut.get("hold_seconds")
             if hold_seconds:
-                sindex = shortcut["id"]
                 if sindex not in hold_timers:
-                    t=threading.Timer(float(hold_seconds), execute_action, args=[shortcut["type"], shortcut["action"]])
-
+                    t = threading.Timer(float(hold_seconds), execute_action, args=[shortcut["type"], shortcut["action"]])
                     t.start()
                     hold_timers[sindex] = t
             else:
+                # normal shortcut: only fire once per keypress, not repeatedly
                 if sindex not in fired_shortcuts:
                     fired_shortcuts.add(sindex)
                     execute_action(shortcut["type"], shortcut["action"])
         except Exception as e:
-            # One bad shortcut won't kill the listener thread
             print(f"Error with shortcut {shortcut['keys']}: {e}")
 
 def on_release(key):

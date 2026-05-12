@@ -71,8 +71,9 @@ class ShortcutApplication:
         if not action:
             messagebox.showerror("Error", "Please enter an action value")
             return
-
-        sm.add_shortcut(keys, action_type, action)
+        
+        #hold secs can be a number like 2.0 or None so if they fill it in it gets updated like 2, hold_seconds=2 also if its blank it can be None
+        sm.add_shortcut(keys, action_type, action, hold_seconds=hold_seconds)
         self.refresh_list()
 
         # Clearing the input fields
