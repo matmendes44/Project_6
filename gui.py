@@ -27,7 +27,7 @@ class ShortcutApplication:
         tk.Label(root, text="Hold Duration (seconds):").grid(row=3, column=0, padx=10, pady=10, sticky="w")
         self.hold_entry = tk.Entry(root, width=10)
         self.hold_entry.grid(row=3, column=1, padx=10, pady=10, sticky="w")
-        tk.Label(root, text="(leave blank for normal shortcut)").grid(row=3, column=2, padx=5, sticky="w")
+        tk.Label(root, text="(leave hold duration blank for normal shortcut)").grid(row=3, column=2, padx=5, sticky="w")
 
        # Save Button
         tk.Button(root, text="Save Shortcut", command=self.save_shortcut).grid(row=3, column=1, sticky="e", padx=10, pady=5)
