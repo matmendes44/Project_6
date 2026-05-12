@@ -69,18 +69,17 @@ def on_release(key):
     data=load_shortcuts()
     for shortcut in data["shortcuts"]:
         sindex = shortcut["id"]
-        if sindex in hold_timers:
-            try:
-                still_held = matches(parse_shortcut(shortcut["keys"]), held_keys)
+        try:
+            still_held = matches(parse_shortcut(shortcut["keys"]), held_keys)
 
-            except Exception:
-                still_held = False
-            
-            if not still_held:
-                fired_shortcuts.discard(sindex)
-                if sindex in hold_timers:
-                    hold_timers[sindex].cancel()
-                    del hold_timers[sindex]
+        except Exception:
+            still_held = False
+        
+        if not still_held:
+            fired_shortcuts.discard(sindex)
+            if sindex in hold_timers:
+                hold_timers[sindex].cancel()
+                del hold_timers[sindex]
 
 def start_listener():
     """Non-blocking - returns immediately, listener runs in background thread."""
