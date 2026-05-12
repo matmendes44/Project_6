@@ -5,6 +5,7 @@ import threading # add for the hold timer
 
 held_keys = set()
 hold_timers = {}
+fired_shortcuts = set()
 
 # Each modifier name maps to ALL pynput keys that count as that modifier.
 # Left/right variants are different objects in pynput so we make them the same characters here.
@@ -51,7 +52,9 @@ def on_press(key):
                     t.start()
                     hold_timers[sindex] = t
             else:
-                execute_action(shortcut["type"], shortcut["action"])
+                if sindex not in fired_shortcuts:
+                    fired_shortcuts.add(sindex)
+                    execute_action(shortcut["type"], shortcut["action"])
         except Exception as e:
             # One bad shortcut won't kill the listener thread
             print(f"Error with shortcut {shortcut['keys']}: {e}")
@@ -61,7 +64,7 @@ def on_release(key):
     
     #added for hold timer 
     data=load_shortcuts()
-    for shortcut in data["shortcut"]:
+    for shortcut in data["shortcuts"]:
         sindex = shortcut["id"]
         if sindex in hold_timers:
             try:
@@ -71,8 +74,10 @@ def on_release(key):
                 still_held = False
             
             if not still_held:
-                hold_timers[sindex].cancel()
-                del hold_timers[sindex]
+                fired_shortcuts.discard(sindex)
+                if sindex in hold_timers:
+                    hold_timers[sindex].cancel()
+                    del hold_timers[sindex]
 
 def start_listener():
     """Non-blocking - returns immediately, listener runs in background thread."""
