@@ -12,9 +12,5 @@
 ## Run 
 - python3 main.py
 
-# Issues
-If shortcuts only work when the app is focused, run:
-- sudo usermod -a -G input $USER
-
-then log out and back in 
-
+## Issues
+Global keyboard listening is limited inside a VirtualBox VM, shortcuts only fire when the app window is focused. This is a VM-level restriction. Normally pynput captures keys globally in the background as intended.
