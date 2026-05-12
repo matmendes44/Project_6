@@ -34,6 +34,8 @@ def matches(requirements, held):
     return all(req & held for req in requirements)
 
 def on_press(key):
+    if key in held_keys:
+        return
     held_keys.add(key)
     # Reload on every press so for GUI-added shortcuts to work we wont need to restart
     data = load_shortcuts()
