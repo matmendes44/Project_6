@@ -65,7 +65,7 @@ def list_shortcuts():
     print()
 
 # Adds shortcuts to the JSON file 
-def add_shortcut(keys, action_type, action, description=""):
+def add_shortcut(keys, action_type, action, description="", hold_seconds=None):
     data = load_shortcuts()
     for myDict in data["shortcuts"]:#if the keybind already exist you cant add another keybind with the same binding
         if myDict["keys"] == keys:
@@ -81,6 +81,7 @@ def add_shortcut(keys, action_type, action, description=""):
         "keys": keys,
         "type": action_type,
         "action": action,
+        "hold_seconds": hold_seconds,
         "description": description
     }
     
@@ -92,7 +93,7 @@ def add_shortcut(keys, action_type, action, description=""):
 
 
 
-def edit_shortcut(shortcut_id, keys=None, action_type=None, action=None, description=None):
+def edit_shortcut(shortcut_id, keys=None, action_type=None, action=None, hold_seconds=None, description=None):
     data=load_shortcuts()
 
     # each shortcut is stored as a dictionary inside data["shortcuts"] -> we are just inside the shortcuts index
@@ -115,6 +116,10 @@ def edit_shortcut(shortcut_id, keys=None, action_type=None, action=None, descrip
                 myDict["action"] = action
             if description is not None:
                 myDict["description"] = description
+            #added for hold timer 
+            if hold_seconds is not None:
+                myDict["hold_seconds"] = hold_seconds
+                
     save_shortcuts(data)
     print("")
 

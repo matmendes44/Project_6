@@ -23,6 +23,12 @@ class ShortcutApplication:
         self.action_entry = tk.Entry(root, width=30)
         self.action_entry.grid(row=2, column=1, padx=10, pady=10)
 
+        #for hold timer
+        tk.Label(root, text="Hold Duration (seconds):").grid(row=3, column=0, padx=10, pady=10, sticky="w")
+        self.hold_entry = tk.Entry(root, width=10)
+        self.hold_entry.grid(row=3, column=1, padx=10, pady=10, sticky="w")
+        tk.Label(root, text="(leave blank for normal shortcut)").grid(row=3, column=2, padx=5, sticky="w")
+
        # Save Button
         tk.Button(root, text="Save Shortcut", command=self.save_shortcut).grid(row=3, column=1, sticky="e", padx=10, pady=5)
 
@@ -42,6 +48,22 @@ class ShortcutApplication:
         action_type = self.action_var.get()
         action = self.action_entry.get().strip()
 
+
+        #added for hold timer
+        hold_raw = self.hold_entry.get().strip()
+        hold_seconds = None
+        if hold_raw:
+            try:
+                hold_seconds = float(hold_raw)
+                if hold_seconds <= 0:
+                    raise ValueError
+            except ValueError:
+                messagebox.showerror("Error", "Hold duration must be a positive number")
+                return
+
+
+
+
         # Validation
         if not keys:
             messagebox.showerror("Error", "Please enter a key combination")
@@ -56,6 +78,7 @@ class ShortcutApplication:
         # Clearing the input fields
         self.keyboard_input.delete(0, tk.END)
         self.action_entry.delete(0, tk.END)
+        self.hold_entry.delete(0, tk.END)
 
     def delete_shortcut(self):
         selection = self.shortcut_list.curselection()
@@ -75,5 +98,6 @@ class ShortcutApplication:
         self.shortcut_list.delete(0, tk.END)
         data = sm.load_shortcuts()
         for s in data["shortcuts"]:
-            display = f"{s['id']} | {s['keys']} | {s['type']} | {s['action']}"
+            hold_info = f" | hold: {s['hold_seconds']}s" if s.get("hold_seconds") else ""
+            display = f"{s['id']} | {s['keys']} | {s['type']} | {s['action']}{hold_info}"
             self.shortcut_list.insert(tk.END, display)
